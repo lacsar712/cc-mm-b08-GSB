@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>批量导入 - 矿井瓦斯班测台</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; background: #1c1917; color: #f5f5f4; }
+    header { display: flex; gap: 12px; align-items: center; padding: 12px 20px; background: #44403c; }
+    main { max-width: 860px; margin: 20px auto; padding: 0 12px; }
+    input, button, textarea { padding: 8px; margin-right: 8px; }
+    textarea { width: 100%; box-sizing: border-box; height: 160px; background: #292524; color: #f5f5f4; border: 1px solid #57534e; }
+    .alarm { color: #fca5a5; } .ok { color: #86efac; } .bad { color: #fca5a5; }
+    #msg { min-height: 1.4em; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    td, th { border-bottom: 1px solid #57534e; padding: 6px; text-align: left; }
+    a { color: #93c5fd; }
+    button:disabled { opacity: .45; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>矿井瓦斯班测台 · 批量导入</strong>
+    <span id="who"></span>
+    <button id="out" hidden>退出</button>
+  </header>
+  <main>
+    <p><a href="/">← 回总表</a></p>
+    <section id="denied" hidden>
+      <h2 class="bad">无权访问</h2>
+      <p>旁观账号不能打开导入页，仅瓦斯检查员可批量导入。</p>
+    </section>
+    <section id="panel" hidden>
+      <p>每行一条，格式「测点名,浓度」（也支持空格或制表符分隔）。先试算查看每行状态，确认后才整批入库；任一行测点评为空则整批不入库。</p>
+      <textarea id="text" placeholder="东翼-12,0.42&#10;回风巷,1.35"></textarea>
+      <p>
+        <button id="preview">试算</button>
+        <button id="confirm" disabled>确认导入</button>
+      </p>
+      <p id="msg"></p>
+      <table id="previewTable" hidden>
+        <thead><tr><th>行号</th><th>测点</th><th>甲烷 %</th><th>将产生状态</th><th>说明</th></tr></thead>
+        <tbody id="previewRows"></tbody>
+      </table>
+      <h3>导入记录</h3>
+      <table>
+        <thead><tr><th>批次</th><th>结果</th><th>行数</th><th>入库数</th><th>失败原因</th><th>操作人</th><th>时间</th></tr></thead>
+        <tbody id="history"></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="/import.js"></script>
+</body>
+</html>

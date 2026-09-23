@@ -37,6 +37,7 @@ function showApp() {
   document.querySelector("#who").textContent = role === "writer" ? "检查员" : "查看";
   document.querySelector("#out").hidden = false;
   form.hidden = role !== "writer";
+  document.querySelector("#importLink").hidden = role !== "writer";
   connect();
   load();
 }
